@@ -1,6 +1,7 @@
 // src/components/SupplierManagement.tsx
 import { useState, useEffect } from 'react';
-import { Card, Table, TableHeader, TableBody, TableRow, TableCell } from 'shadcn-ui';
+import { Card } from './ui/card';
+import { Table, TableHeader, TableBody, TableRow, TableCell } from './ui/table';
 
 type Supplier = {
   id: number;

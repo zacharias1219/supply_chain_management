@@ -1,7 +1,6 @@
-// src/layout.tsx
+// src/pages/layout.tsx
 import { ReactNode } from 'react';
-import { Card, Alert } from 'shadcn-ui';
-import '../globals.css';
+import { Card } from '../components/ui/card'; // Update path if necessary
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (

@@ -1,37 +1,38 @@
-// src/components/RealTimeMonitoring.tsx
+// src/components/SustainabilityTracking.tsx
 import { useState, useEffect } from 'react';
-import { Card, Table, TableHeader, TableBody, TableRow, TableCell } from 'shadcn-ui';
+import { Card } from './ui/card';
+import { Table, TableHeader, TableBody, TableRow, TableCell } from './ui/table';
 
-type MonitoringItem = {
+type SustainabilityItem = {
   id: number;
   description: string;
-  status: string;
+  impact: string;
 };
 
-const RealTimeMonitoring = () => {
-  const [monitoringData, setMonitoringData] = useState<MonitoringItem[]>([]);
+const SustainabilityTracking = () => {
+  const [sustainabilityData, setSustainabilityData] = useState<SustainabilityItem[]>([]);
 
   useEffect(() => {
-    fetch('/api/monitoring')
+    fetch('/api/sustainability')
       .then((response) => response.json())
-      .then((data: MonitoringItem[]) => setMonitoringData(data));
+      .then((data: SustainabilityItem[]) => setSustainabilityData(data));
   }, []);
 
   return (
     <Card className="bg-white p-4 rounded shadow-lg">
-      <h2 className="text-2xl font-bold mb-4">Real-Time Monitoring</h2>
+      <h2 className="text-2xl font-bold mb-4">Sustainability Tracking</h2>
       <Table>
         <TableHeader>
           <TableRow>
             <TableCell>Item</TableCell>
-            <TableCell>Status</TableCell>
+            <TableCell>Impact</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {monitoringData.map((item) => (
+          {sustainabilityData.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.description}</TableCell>
-              <TableCell>{item.status}</TableCell>
+              <TableCell>{item.impact}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -40,4 +41,4 @@ const RealTimeMonitoring = () => {
   );
 };
 
-export default RealTimeMonitoring;
+export default SustainabilityTracking;

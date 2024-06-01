@@ -1,16 +1,14 @@
 // src/services/sustainabilityTracking.ts
-type SustainabilityItem = {
-    id: number;
-    description: string;
-    impact: string;
-  };
-  
-  const sustainabilityData: SustainabilityItem[] = [
-    { id: 1, description: 'Carbon footprint', impact: 'Low' },
-    { id: 2, description: 'Energy usage', impact: 'Medium' },
-  ];
-  
-  export function getSustainabilityData(): SustainabilityItem[] {
-    return sustainabilityData;
-  }
-  
+import connectToDatabase from '../lib/mongoose';
+import Sustainability from '../models/Sustainability';
+
+export async function getSustainabilityData() {
+  await connectToDatabase();
+  return Sustainability.find({});
+}
+
+export async function createSustainabilityItem(description: string, impact: string) {
+  await connectToDatabase();
+  const sustainabilityItem = new Sustainability({ description, impact });
+  return sustainabilityItem.save();
+}

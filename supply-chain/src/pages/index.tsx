@@ -7,7 +7,10 @@ import CostOptimization from '../components/CostOptimization';
 import RiskManagement from '../components/RiskManagement';
 import RealTimeMonitoring from '../components/RealTimeMonitoring';
 import SustainabilityTracking from '../components/SustainabilityTracking';
-import { Button, Card, Alert } from 'shadcn-ui';
+import DemandForecasting from '../components/DemandForecasting';
+import { Button } from '../components/ui/button';
+import { Card } from '../components/ui/card';
+import { Alert } from '../components/ui/alert';
 
 const HomePage = () => {
   return (
@@ -28,6 +31,7 @@ const HomePage = () => {
         <RiskManagement />
         <RealTimeMonitoring />
         <SustainabilityTracking />
+        <DemandForecasting />
       </div>
     </Layout>
   );

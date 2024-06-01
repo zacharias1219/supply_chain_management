@@ -1,15 +1,14 @@
 // src/services/supplierManagement.ts
-type Supplier = {
-    id: number;
-    name: string;
-  };
-  
-  const supplierData: Supplier[] = [
-    { id: 1, name: 'Supplier 1' },
-    { id: 2, name: 'Supplier 2' },
-  ];
-  
-  export function getSuppliers(): Supplier[] {
-    return supplierData;
-  }
-  
+import connectToDatabase from '../lib/mongoose';
+import Supplier from '../models/Supplier';
+
+export async function getSuppliers() {
+  await connectToDatabase();
+  return Supplier.find({});
+}
+
+export async function createSupplier(name: string) {
+  await connectToDatabase();
+  const supplier = new Supplier({ name });
+  return supplier.save();
+}

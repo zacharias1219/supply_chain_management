@@ -1,15 +1,30 @@
-import OpenAI, { ClientOptions } from 'openai';
+// src/services/demandForecasting.ts
+import { Configuration, OpenAIApi } from 'openai';
+import connectToDatabase from '../lib/mongoose';
+import DemandForecast from '../models/DemandForecast';
 
-const openaiOptions: ClientOptions = {
-    apiKey: process.env.OPENAI_API_KEY || '',
-};
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-const openai = new OpenAI(openaiOptions);
+const openai = new OpenAIApi(configuration);
 
-export async function getDemandForecasting(prompt: string) {
-    const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "system", content: prompt }],
-    });
-    return response.choices[0].message.content;
+export async function getDemandForecasting(prompt: string): Promise<string> {
+  const response = await openai.createCompletion({
+    model: 'text-davinci-003',
+    prompt,
+    max_tokens: 150,
+  });
+  return response.data.choices[0].text.trim();
+}
+
+export async function saveDemandForecast(prompt: string, forecast: string) {
+  await connectToDatabase();
+  const newForecast = new DemandForecast({ prompt, forecast });
+  return newForecast.save();
+}
+
+export async function getSavedForecasts() {
+  await connectToDatabase();
+  return DemandForecast.find({});
 }

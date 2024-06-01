@@ -1,34 +1,38 @@
-// src/components/RouteOptimization.tsx
+// src/components/CostOptimization.tsx
 import { useState, useEffect } from 'react';
-import { Card, Table, TableHeader, TableBody, TableRow, TableCell } from 'shadcn-ui';
+import { Card } from './ui/card';
+import { Table, TableHeader, TableBody, TableRow, TableCell } from './ui/table';
 
-type Route = {
+type Cost = {
   id: number;
   description: string;
+  amount: number;
 };
 
-const RouteOptimization = () => {
-  const [routes, setRoutes] = useState<Route[]>([]);
+const CostOptimization = () => {
+  const [costs, setCosts] = useState<Cost[]>([]);
 
   useEffect(() => {
-    fetch('/api/routes')
+    fetch('/api/costs')
       .then((response) => response.json())
-      .then((data: Route[]) => setRoutes(data));
+      .then((data: Cost[]) => setCosts(data));
   }, []);
 
   return (
     <Card className="bg-white p-4 rounded shadow-lg">
-      <h2 className="text-2xl font-bold mb-4">Route Optimization</h2>
+      <h2 className="text-2xl font-bold mb-4">Cost Optimization</h2>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableCell>Route</TableCell>
+            <TableCell>Description</TableCell>
+            <TableCell>Amount</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {routes.map((route) => (
-            <TableRow key={route.id}>
-              <TableCell>{route.description}</TableCell>
+          {costs.map((cost) => (
+            <TableRow key={cost.id}>
+              <TableCell>{cost.description}</TableCell>
+              <TableCell>${cost.amount}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -37,4 +41,4 @@ const RouteOptimization = () => {
   );
 };
 
-export default RouteOptimization;
+export default CostOptimization;

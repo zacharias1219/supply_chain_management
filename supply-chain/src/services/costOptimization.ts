@@ -1,16 +1,14 @@
 // src/services/costOptimization.ts
-type Cost = {
-    id: number;
-    description: string;
-    amount: number;
-  };
-  
-  const costData: Cost[] = [
-    { id: 1, description: 'Transportation', amount: 1000 },
-    { id: 2, description: 'Warehousing', amount: 2000 },
-  ];
-  
-  export function getCosts(): Cost[] {
-    return costData;
-  }
-  
+import connectToDatabase from '../lib/mongoose';
+import Cost from '../models/Cost';
+
+export async function getCosts() {
+  await connectToDatabase();
+  return Cost.find({});
+}
+
+export async function createCost(description: string, amount: number) {
+  await connectToDatabase();
+  const cost = new Cost({ description, amount });
+  return cost.save();
+}

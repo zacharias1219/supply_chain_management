@@ -1,16 +1,14 @@
 // src/services/realTimeMonitoring.ts
-type MonitoringItem = {
-    id: number;
-    description: string;
-    status: string;
-  };
-  
-  const monitoringData: MonitoringItem[] = [
-    { id: 1, description: 'Warehouse temperature', status: 'Normal' },
-    { id: 2, description: 'Delivery vehicle status', status: 'On schedule' },
-  ];
-  
-  export function getMonitoringData(): MonitoringItem[] {
-    return monitoringData;
-  }
-  
+import connectToDatabase from '../lib/mongoose';
+import Monitoring from '../models/Monitoring';
+
+export async function getMonitoringData() {
+  await connectToDatabase();
+  return Monitoring.find({});
+}
+
+export async function createMonitoringItem(description: string, status: string) {
+  await connectToDatabase();
+  const monitoringItem = new Monitoring({ description, status });
+  return monitoringItem.save();
+}

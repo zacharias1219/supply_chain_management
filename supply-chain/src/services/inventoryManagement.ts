@@ -1,16 +1,14 @@
 // src/services/inventoryManagement.ts
-type InventoryItem = {
-    id: number;
-    name: string;
-    quantity: number;
-  };
-  
-  const inventoryData: InventoryItem[] = [
-    { id: 1, name: 'Item 1', quantity: 100 },
-    { id: 2, name: 'Item 2', quantity: 200 },
-  ];
-  
-  export function getInventory(): InventoryItem[] {
-    return inventoryData;
-  }
-  
+import connectToDatabase from '../lib/mongoose';
+import Inventory from '../models/Inventory';
+
+export async function getInventory() {
+  await connectToDatabase();
+  return Inventory.find({});
+}
+
+export async function createInventoryItem(name: string, quantity: number) {
+  await connectToDatabase();
+  const inventoryItem = new Inventory({ name, quantity });
+  return inventoryItem.save();
+}

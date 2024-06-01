@@ -1,15 +1,14 @@
 // src/services/riskManagement.ts
-type Risk = {
-    id: number;
-    description: string;
-  };
-  
-  const riskData: Risk[] = [
-    { id: 1, description: 'Supplier disruption' },
-    { id: 2, description: 'Natural disaster' },
-  ];
-  
-  export function getRisks(): Risk[] {
-    return riskData;
-  }
-  
+import connectToDatabase from '../lib/mongoose';
+import Risk from '../models/Risk';
+
+export async function getRisks() {
+  await connectToDatabase();
+  return Risk.find({});
+}
+
+export async function createRisk(description: string) {
+  await connectToDatabase();
+  const risk = new Risk({ description });
+  return risk.save();
+}
