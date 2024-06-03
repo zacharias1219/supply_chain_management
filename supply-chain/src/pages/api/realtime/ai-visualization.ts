@@ -3,7 +3,8 @@ import connectToDatabase from '../../../lib/mongoose';
 import Inventory from '../../../models/Inventory';
 import Order from '../../../models/Order';
 import Delivery from '../../../models/Delivery';
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
+import { ClientOptions } from 'openai';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await connectToDatabase();
@@ -18,18 +19,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     Delivery Data: ${JSON.stringify(deliveryData, null, 2)}
   `;
 
-  const configuration = new Configuration({
+const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
-  });
-
-  const openai = new OpenAIApi(configuration);
-  const aiResponse = await openai.createCompletion({
+} as ClientOptions);
+const aiResponse = await openai.completions.create({
     model: 'text-davinci-003',
     prompt: `Create a beautiful visualization for the following data:\n\n${dataDescriptions}`,
     max_tokens: 300,
-  });
+});
 
-  res.status(200).json({ visualization: aiResponse.data.choices[0].text });
+res.status(200).json({ visualization: aiResponse.choices[0].text });
 };
 
 export default handler;
