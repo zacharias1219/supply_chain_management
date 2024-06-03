@@ -1,14 +1,25 @@
-// src/models/Sustainability.js
 import mongoose from 'mongoose';
 
 const SustainabilitySchema = new mongoose.Schema({
-  description: {
+  metric: {
     type: String,
     required: true,
   },
-  impact: {
+  value: {
+    type: Number,
+    required: true,
+  },
+  unit: {
     type: String,
     required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 
