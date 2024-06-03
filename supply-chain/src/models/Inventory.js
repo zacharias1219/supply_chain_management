@@ -1,4 +1,3 @@
-// src/models/Inventory.js
 import mongoose from 'mongoose';
 
 const InventorySchema = new mongoose.Schema({
@@ -9,6 +8,16 @@ const InventorySchema = new mongoose.Schema({
   quantity: {
     type: Number,
     required: true,
+  },
+  description: {
+    type: String,
+  },
+  category: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 
