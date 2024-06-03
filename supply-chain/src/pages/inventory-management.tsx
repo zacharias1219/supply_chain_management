@@ -1,8 +1,9 @@
-// src/pages/inventory-management.tsx
 import { useState, useEffect } from 'react';
 import Layout from './layout';
 import AddInventoryForm from '../components/AddInventoryForm';
 import InventoryTable from '../components/InventoryTable';
+import InventorySummary from '../components/InventorySummary';
+import InventoryOptimizationSuggestions from '../components/InventoryOptimizationSuggestions';
 
 interface InventoryItem {
   _id: string;
@@ -31,7 +32,6 @@ const InventoryManagementPage = () => {
 
   const handleEdit = async (item: InventoryItem) => {
     // Logic to edit inventory item
-    // Example: Show a form to edit the item details
     console.log('Edit item:', item);
   };
 
@@ -49,6 +49,8 @@ const InventoryManagementPage = () => {
       <div className="bg-white p-6 rounded shadow-lg">
         <h1 className="text-3xl font-bold mb-4">Inventory Management</h1>
         <AddInventoryForm onAdd={handleAdd} />
+        <InventorySummary />
+        <InventoryOptimizationSuggestions />
         <InventoryTable inventory={inventory} onEdit={handleEdit} onDelete={handleDelete} />
       </div>
     </Layout>

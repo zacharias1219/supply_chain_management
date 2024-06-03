@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import Layout from './layout';
 import AddSupplierForm from '../components/AddSupplierForm';
 import SupplierTable from '../components/SupplierTable';
+import SupplierSummary from '../components/SupplierSummary';
+import TopSuppliers from '../components/TopSuppliers';
+import SupplierPerformanceAnalysis from '../components/SupplierPerformanceAnalysis';
 
 interface Supplier {
   _id: string;
@@ -47,6 +50,9 @@ const SupplierManagementPage = () => {
       <div className="bg-white p-6 rounded shadow-lg">
         <h1 className="text-3xl font-bold mb-4">Supplier Management</h1>
         <AddSupplierForm onAdd={handleAdd} />
+        <SupplierSummary />
+        <TopSuppliers />
+        <SupplierPerformanceAnalysis />
         <SupplierTable suppliers={suppliers} onEdit={handleEdit} onDelete={handleDelete} />
       </div>
     </Layout>
