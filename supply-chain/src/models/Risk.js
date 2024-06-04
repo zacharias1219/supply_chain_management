@@ -17,7 +17,7 @@ const RiskSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  mitigationPlan: {
+  mitigationStrategy: {
     type: String,
     required: true,
   },

@@ -10,11 +10,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(inventoryItems);
   } else if (req.method === 'POST') {
     const { name, quantity, description, category } = req.body;
-    const newInventoryItem = new Inventory({ name, quantity, description, category });
-    await newInventoryItem.save();
-    res.status(201).json(newInventoryItem);
+    const newItem = new Inventory({ name, quantity, description, category });
+    await newItem.save();
+    res.status(201).json(newItem);
   } else {
-    res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).end(); // Method Not Allowed
   }
 };
 

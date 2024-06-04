@@ -37,6 +37,7 @@ const HomePage = () => {
       <Alert className="mt-4 bg-yellow-200 text-yellow-800 text-center">
         This tool uses advanced AI algorithms to help you optimize your supply chain.
       </Alert>
+      <h2 className='text-2xl font-bold text-center'>Dashboard</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-6">
         <Link href="/inventory-management" legacyBehavior>
           <a>
