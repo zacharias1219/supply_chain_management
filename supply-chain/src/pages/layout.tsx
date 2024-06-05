@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import { Card } from '../components/ui/card'; // Update path if necessary
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -51,6 +52,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
             </li>
           </ul>
         </nav>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </header>
       <main className="flex-1 w-full p-4">
         <Card className="max-w-4xl mx-auto p-6">
