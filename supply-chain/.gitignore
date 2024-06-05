@@ -35,3 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 QuickStart.java
+mongodb+srv://rickoshade1891:aKSj5r76KEpzZUPw@cluster0.4dqfb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
