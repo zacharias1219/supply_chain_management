@@ -1,39 +1,40 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import connectToDatabase from '../../lib/mongoose';
-import Inventory from '../../models/Inventory';
-import Supplier from '../../models/Supplier';
-import Route from '../../models/Route';
-import Cost from '../../models/Cost';
-import Risk from '../../models/Risk';
-import RealTime from '../../models/RealTime';
-import Sustainability from '../../models/Sustainability';
-import Demand from '../../models/Demand';
-import SupplyChain from '../../models/SupplyChain';
+import clientPromise from '../../lib/mongodb';
+import { Db, MongoClient } from 'mongodb';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  await connectToDatabase();
+  let client: MongoClient;
+  let db: Db;
 
-  const inventory = await Inventory.countDocuments();
-  const suppliers = await Supplier.countDocuments();
-  const routes = await Route.countDocuments();
-  const costs = await Cost.countDocuments();
-  const risks = await Risk.countDocuments();
-  const realTime = await RealTime.countDocuments();
-  const sustainability = await Sustainability.countDocuments();
-  const demand = await Demand.countDocuments();
-  const supplyChain = await SupplyChain.countDocuments();
+  try {
+    client = await clientPromise; // Await the promise to get the MongoClient instance
+    db = client.db('myFirstDatabase'); // Replace with your database name
+  } catch (error) {
+    console.error('Failed to connect to the database:', error);
+    return res.status(500).json({ error: 'Failed to connect to the database' });
+  }
 
-  res.status(200).json({
-    inventory,
-    suppliers,
-    routes,
-    costs,
-    risks,
-    realTime,
-    sustainability,
-    demand,
-    supplyChain,
-  });
+  if (req.method === 'GET') {
+    try {
+      // Example summary data fetching
+      const inventoryCount = await db.collection('inventory').countDocuments();
+      const criticalItems = await db.collection('inventory').find({ quantity: { $lt: 10 } }).toArray();
+
+      const summaryData = {
+        inventory: {
+          totalItems: inventoryCount,
+          criticalItems: criticalItems.map(item => item.name),
+        },
+        // Add similar summary fetching for other collections
+      };
+
+      res.status(200).json(summaryData);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch data' });
+    }
+  } else {
+    res.status(405).end(); // Method Not Allowed
+  }
 };
 
 export default handler;

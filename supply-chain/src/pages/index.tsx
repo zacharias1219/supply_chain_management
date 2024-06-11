@@ -1,4 +1,3 @@
-// src/pages/index.tsx
 import Layout from './layout';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -18,12 +17,13 @@ const HomePage = () => {
     forecasting: { latestForecast: '', accuracy: 0 },
   });
 
+  const fetchData = async () => {
+    const res = await fetch('/api/summary');
+    const data = await res.json();
+    setSummaryData(data);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/api/summary');
-      const data = await res.json();
-      setSummaryData(data);
-    };
     fetchData();
   }, []);
 
