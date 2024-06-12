@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
-import { Alert } from '../components/ui/alert';
 
 const HomePage = () => {
   const [summaryData, setSummaryData] = useState({
@@ -32,12 +31,12 @@ const HomePage = () => {
       <div className="text-center p-6 bg-white rounded shadow-lg">
         <h1 className="text-3xl font-bold mb-4">AI-Enhanced Supply Chain Optimization Tool</h1>
         <p className="text-lg">Optimize your supply chain operations with AI-driven insights and predictions.</p>
-        <Alert className="mt-4 bg-green-500 text-white text-center">
-        This tool uses advanced AI algorithms to help you optimize your supply chain.
-      </Alert>
+        <div className="mt-4 bg-green-500 text-white text-center p-4 rounded">
+          This tool uses advanced AI algorithms to help you optimize your supply chain.
+        </div>
       </div>
       
-      <h2 className='text-2xl font-bold text-center'>Dashboard</h2>
+      <h2 className='text-2xl font-bold text-center mt-6'>Dashboard</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-6">
         <Link href="/inventory-management" legacyBehavior>
           <a>
