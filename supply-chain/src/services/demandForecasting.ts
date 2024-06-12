@@ -1,6 +1,6 @@
 // src/services/demandForecasting.ts
 import { Configuration, OpenAIApi } from 'openai';
-import connectToDatabase from '../lib/mongoose';
+import connectToDatabase from '../lib2/mongoose';
 import DemandForecast from '../models/DemandForecast';
 
 const configuration = new Configuration({

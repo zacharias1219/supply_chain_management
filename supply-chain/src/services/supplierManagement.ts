@@ -1,5 +1,5 @@
 // src/services/supplierManagement.ts
-import connectToDatabase from '../lib/mongoose';
+import connectToDatabase from '../lib2/mongoose';
 import Supplier from '../models/Supplier';
 
 export async function getSuppliers() {
