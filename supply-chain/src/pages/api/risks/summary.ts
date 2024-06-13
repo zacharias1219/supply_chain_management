@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import connectToDatabase from '../../../lib2/mongoose';
+import connectToDatabase from '../../../lib/mongoose';
 import Risk from '../../../models/Risk';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

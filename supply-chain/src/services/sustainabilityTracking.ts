@@ -1,5 +1,5 @@
 // src/services/sustainabilityTracking.ts
-import connectToDatabase from '../lib2/mongoose';
+import connectToDatabase from '../lib/mongoose';
 import Sustainability from '../models/Sustainability';
 
 export async function getSustainabilityData() {

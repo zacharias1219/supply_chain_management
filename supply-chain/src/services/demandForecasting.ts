@@ -1,5 +1,5 @@
 import { Configuration, OpenAIApi } from 'openai';
-import connectToDatabase from '../lib2/mongoose';
+import connectToDatabase from '../lib/mongoose';
 import DemandForecast from '../models/DemandForecast';
 
 // Initialize OpenAI API

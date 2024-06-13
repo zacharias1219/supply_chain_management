@@ -1,5 +1,5 @@
 // src/services/inventoryManagement.ts
-import connectToDatabase from '../lib2/mongoose';
+import connectToDatabase from '../lib/mongoose';
 import Inventory from '../models/Inventory';
 
 export async function getInventory() {
