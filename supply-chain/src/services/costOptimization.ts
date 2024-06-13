@@ -1,5 +1,5 @@
 // src/services/costOptimization.ts
-import connectToDatabase from '../lib/mongoose';
+import connectToDatabase from '../lib2/mongoose';
 import Cost from '../models/Cost';
 
 export async function getCosts() {

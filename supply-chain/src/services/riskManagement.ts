@@ -1,5 +1,5 @@
 // src/services/riskManagement.ts
-import connectToDatabase from '../lib/mongoose';
+import connectToDatabase from '../lib2/mongoose';
 import Risk from '../models/Risk';
 
 export async function getRisks() {

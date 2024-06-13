@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import connectToDatabase from '../../../lib/mongoose';
+import connectToDatabase from '../../../lib2/mongoose';
 import Sales from '../../../models/Sales';
 import OpenAI from 'openai';
 import { ClientOptions } from 'openai';
