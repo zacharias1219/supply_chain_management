@@ -1,12 +1,11 @@
-// src/services/demandForecasting.ts
 import { Configuration, OpenAIApi } from 'openai';
 import connectToDatabase from '../lib2/mongoose';
 import DemandForecast from '../models/DemandForecast';
 
+// Initialize OpenAI API
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
 const openai = new OpenAIApi(configuration);
 
 export async function getDemandForecasting(prompt: string): Promise<string> {
