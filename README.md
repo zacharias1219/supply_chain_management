@@ -84,7 +84,7 @@ src/
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/yourusername/supply-chain-optimization-tool.git
-   cd supply-chain-optimization-tool
+   cd supply-chain
    ```
 
 2. **Install dependencies**:
