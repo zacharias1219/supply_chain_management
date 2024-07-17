@@ -1,40 +1,63 @@
+// src/pages/api/summary.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
-import clientPromise from '../../lib2/mongodb';
-import { Db, MongoClient } from 'mongodb';
+import connectToDatabase from '../../lib2/mongoose';
+import Inventory from '../../models/Inventory';
+import Supplier from '../../models/Supplier';
+import Route from '../../models/Route';
+import Cost from '../../models/Cost';
+import Risk from '../../models/Risk';
+import Monitoring from '../../models/Monitoring';
+import Sustainability from '../../models/Sustainability';
+import DemandForecast from '../../models/DemandForecast';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  let client: MongoClient;
-  let db: Db;
+  await connectToDatabase();
 
-  try {
-    client = await clientPromise; // Await the promise to get the MongoClient instance
-    db = client.db('myFirstDatabase'); // Replace with your database name
-  } catch (error) {
-    console.error('Failed to connect to the database:', error);
-    return res.status(500).json({ error: 'Failed to connect to the database' });
-  }
+  const inventoryData = await Inventory.find({});
+  const suppliersData = await Supplier.find({});
+  const routesData = await Route.find({});
+  const costsData = await Cost.find({});
+  const risksData = await Risk.find({});
+  const monitoringData = await Monitoring.find({});
+  const sustainabilityData = await Sustainability.find({});
+  const demandForecastData = await DemandForecast.find({});
 
-  if (req.method === 'GET') {
-    try {
-      // Example summary data fetching
-      const inventoryCount = await db.collection('inventory').countDocuments();
-      const criticalItems = await db.collection('inventory').find({ quantity: { $lt: 10 } }).toArray();
+  const summary = {
+    inventory: {
+      totalItems: inventoryData.length,
+      criticalItems: inventoryData.filter(item => item.isCritical).map(item => item.name),
+    },
+    suppliers: {
+      totalSuppliers: suppliersData.length,
+      recentSupplier: suppliersData[suppliersData.length - 1]?.name || '',
+    },
+    routes: {
+      totalRoutes: routesData.length,
+      recentRoute: routesData[routesData.length - 1]?.name || '',
+    },
+    costs: {
+      totalSavings: costsData.reduce((acc, cost) => acc + cost.savings, 0),
+      recentCost: costsData[costsData.length - 1]?.description || '',
+    },
+    risks: {
+      totalRisks: risksData.length,
+      criticalRisk: risksData.find(risk => risk.isCritical)?.description || '',
+    },
+    monitoring: {
+      totalMonitored: monitoringData.length,
+      criticalStatus: monitoringData.find(status => status.isCritical)?.description || '',
+    },
+    sustainability: {
+      totalPractices: sustainabilityData.length,
+      impactfulPractice: sustainabilityData.find(practice => practice.isImpactful)?.description || '',
+    },
+    forecasting: {
+      latestForecast: demandForecastData[demandForecastData.length - 1]?.forecast || '',
+      accuracy: demandForecastData.reduce((acc, forecast) => acc + forecast.accuracy, 0) / (demandForecastData.length || 1),
+    },
+  };
 
-      const summaryData = {
-        inventory: {
-          totalItems: inventoryCount,
-          criticalItems: criticalItems.map(item => item.name),
-        },
-        // Add similar summary fetching for other collections
-      };
-
-      res.status(200).json(summaryData);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch data' });
-    }
-  } else {
-    res.status(405).end(); // Method Not Allowed
-  }
+  res.status(200).json(summary);
 };
 
 export default handler;
